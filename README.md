@@ -1,4 +1,5 @@
 # LC
+Crucial Note here!!!
 My leetcode sulotions
 ### 7.Reverse Integer
 1. When implementing %d in vprintf, we do the job in the same way. It works like two stacks : push every element poped out from the original stack into a new stack, but without extra data structures.
