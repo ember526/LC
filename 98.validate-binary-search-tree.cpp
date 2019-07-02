@@ -67,13 +67,18 @@ public:
         return inorder(root, pre);            
     }
     //when in-order traverse a BST, the nodes' values increases as visiting
+    //Pre node is the last node that has been visited, notice that it is a pointer reference as it keeps getting updated through the traversal
     bool inorder(TreeNode* node, TreeNode* & pre) {
         if (node == NULL) return true;
+        //traverse the left subtree, check it against the pre node
         if (!inorder(node->left, pre))
             return false;
+        //visiting current node, and check if this node is bigger than the last node that has been visited
         if (pre && node->val <= pre->val)
             return false;
+        //always keep track of the last node that has been visited
         pre = node;
+        //finally traverse the right subtree
         return inorder(node->right, pre);
     }
 };
