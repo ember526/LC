@@ -1,13 +1,19 @@
 # LC
 My leetcode sulotions
+### 5.Longest Palindromic Substring
+1. The general idea is to expand the substring from one position to two sides.
+2. Also notice that, there are actually two kinds of palindrome : those with one centre and those with two centres. So before expanding the substring outwards, we deal with the central part first.
 ### 7.Reverse Integer
-1. When implementing %d in vprintf, we do the job in the same way. It works like two stacks : push every element poped out from the original stack into a new stack, but without extra data structures.
-2. Notice how to check overflow : check before pushing elements into the new stack.
 ### 13.Roman to Integer
 1. One rule to decide when a roman charactor should be added to or subtracted from the sum : when it denotes a smaller number than the next one, it should be subtracted; otherwise added.
+### 15.3 Sum
+1. Fix one number, then find the other two numbers. The time complexity is n square, while the brute force solution (fix two numbers and search for the third one) is n cube. Since we need to find all the solutions without duplicates, we can sort the array before the search work.
+2. As we move two iterators inward, we can expect that we don't miss out any cases. It can be proven easily.
+3. An important issue is to make sure that the result does not contain any duplicates (the array may have identical elements). It is easy to ignore that the fixed number may find its duplicate.
+4. It seems that using sort() on empty vector leads to error.
 ### 36.Valid Sudoku
 1. The general idea is to keep three "check lists" : rows, columns and 3*3 boxes. Actually, this is how human beings would check if the sudoku is valid.
-2. The takeaway : ponder on how humans would do the job.
+2. The takeaway : ponder on how humans would do the job
 3. Bug : Index out of bounds. The array's max index is 8 instead of nine. Do not use the numbers in the sudoku as indexes of the array. 
 ### 70.Climbint Staairs
 0. Very basic dynamic programming problem, 
@@ -17,6 +23,8 @@ description tells us : 1 or 2 steps a time.
 3. We need a handy data structure to store the number of solutions to the  solved subproblems. And we would need to look it up later. In this case, we only need constant storage for this purpose actually, since one subprolem only contributes to exactly two problems in all and it would become useless after 2 consequtive iterations.
 ### 88. Merge Sorted Array
 1. Fill the array from the back of nums1. Very interesting operations on the array.
+### 94.Binary Tree Inorder Traversal (iterative)
+1. Morris Traversal : a)Do as humans would do : always go to the most left leaf and push every node on the way into the todo stack. b)For every node that we visit, we clime on its right subtree and take the right node as the new root, then repeat the above actions.
 ### 125.Valid Palindrome
 1. Good helpers with strings : isalpha, isalnum and tolower.
 2. "Ignoring cases" means "a==A", rather than "there are no upper case letters".
@@ -32,6 +40,11 @@ description tells us : 1 or 2 steps a time.
 ### 268.Missing Number
 1. Very simple solution : if we know a series of consecutive integers starting from 0 and its length, then we know the sum of them; after taking one of them away, the sum changes and we know which one.
 2. We can use this solution because the condition given is very special : starting from 0, consequtive integers.
+### 334.Increasing Triplet Subsequence
+1. The question does not require that we should find all such subsequences. We only need to tell if such things do exist.
+2. We need to look at things from a different perspective. Ask the question : what is an increasing triplet subsequence?
+3. The interesting thing about this solution is that it amazingly integrate the If-Else Block with the inner nature of increasing subsequence.
+4. PS : what is the thing that we can only go forward and cannot go back? Is there any other answer but time? Well, I am trying to work out a metophor to this question.
 ### 384.Shuffle an Array
 1. As for the data members, we should always keep the original version as it is required by reset();
 2. To generate a random permutation of a array, we have Fisher-Yates algorithms here : swap every element with a random element before it (or with itself);
