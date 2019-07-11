@@ -33,12 +33,11 @@
 class Solution {
 public:
     int trailingZeroes(int n) {
-        int count = 0, i = 1;
+        int count = 0;
         long long base = 5;
         while (n / base) {
             count += n / base;
             base *= 5;
-            ++i;
         }
         return count;
     }
