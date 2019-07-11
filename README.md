@@ -11,26 +11,54 @@ My leetcode sulotions
 2. As we move two iterators inward, we can expect that we don't miss out any cases. It can be proven easily.
 3. An important issue is to make sure that the result does not contain any duplicates (the array may have identical elements). It is easy to ignore that the fixed number may find its duplicate.
 4. It seems that using sort() on empty vector leads to error.
+### 20.Valid Parentheses
+1. Attemp to use top() or pop() on an empty stack would result in runtime error.
 ### 36.Valid Sudoku
 1. The general idea is to keep three "check lists" : rows, columns and 3*3 boxes. Actually, this is how human beings would check if the sudoku is valid.
 2. The takeaway : ponder on how humans would do the job
 3. Bug : Index out of bounds. The array's max index is 8 instead of nine. Do not use the numbers in the sudoku as indexes of the array. 
-### 70.Climbint Staairs
+### 46.Permutation
+1. The general idea is to estimate the way humans would produce all the permutations.
+2. Notice that we have to swap the current position with itself.
+### 70.Climbint Stairs
 0. Very basic dynamic programming problem, 
 1. First question to think about : is the question of a smaller scale and that of a bigger scale *essentially*the same. If they are, we would call the one of a smaller scale 'the subproblem'; then we have more questions to ask based on the principles of DP:
-2. How, *in the given context*, would the subproblem help to solve the problem; or how would the solution to the problem benefits from those to the subproblems. These two questions matter because they indicate how the solution builds up or how the problem breaks down. In this problem, the following builds the connection we need: if we want to reach the Nth step, we have exactly two situations before that result, on the N-1th step or on the N-2th step. That is what the
-description tells us : 1 or 2 steps a time.
 3. We need a handy data structure to store the number of solutions to the  solved subproblems. And we would need to look it up later. In this case, we only need constant storage for this purpose actually, since one subprolem only contributes to exactly two problems in all and it would become useless after 2 consequtive iterations.
-### 88. Merge Sorted Array
+### 75.Sort Colors
+1. It is easy to assume that we can always move the i forward in every iteration, while there would be a  problem when nums[i] == 2.
+2. Partition, quick sort;
+### 78.Subsets
+1.Typical backtracking problem, refer to No.46 permutations.
+### 88.Merge Sorted Array
 1. Fill the array from the back of nums1. Very interesting operations on the array.
 ### 94.Binary Tree Inorder Traversal (iterative)
 1. Morris Traversal : a)Do as humans would do : always go to the most left leaf and push every node on the way into the todo stack. b)For every node that we visit, we clime on its right subtree and take the right node as the new root, then repeat the above actions.
+### 103.Binary Tree Zigzag Level Order Traversal
+1. Nearly same thing as normal level order traversal : use a queue to keep all the nodes that we are going to visit, and for every iteration , first put every node's value into a vector and then enqueue their child nodes for the next iteration.
+2. The only trick here is to have a bool variable to indicate which direction we are going and it only affects the position in the vector that we put the node's value (i or size - 1 - i).
 ### 125.Valid Palindrome
 1. Good helpers with strings : isalpha, isalnum and tolower.
 2. "Ignoring cases" means "a==A", rather than "there are no upper case letters".
+### 155.Min Stack
+1. Notice that this question requires a stack, which can give its min in O(1) time.
+ It gets to do that by pushing its old MIN into stack (again) every time a same or smaller MIN comes in; and when MIN pops out, the next element on the stack is the second smallest which then serves as the new MIN. Notice that we would "update" MIN even the new comer is equal to the MIN; we do this because such new comers have the rightful claim to the MIN and this value would still be the MIN even if one of such values pops out.
+### l69.Majority Element
+1. Boyer-Moore Voting Algorithm https://leetcode.com/articles/majority-element/
+### 172.Factorial Trailing Zeroes
+1. We have much more 2s than 5s, so we only need to count 5s.
+2. Notice that the calculation would take 25 twice.
 ### 191.Number of 1 Bits
 1. Given n, if we let n & n - 1, then we have exactly one less 1 bit in n. If we keep doing it until n is zero, we have the number of 1 bits.
 2. It is rather to prove that. Just use the basic conditions.
+### 202.Happy Number
+1. Use slow and fast to detect circle.
+2. Notice that slow and fast may equal to 1 after iterations
+### 215.Kth Largest Element in an Array
+TODO. Use heap to solve the problem
+1. Partitioning is the right tool to achieve this.
+
+### 230.Kth Smallest Element in a BST
+1. Very typical iterative inorder traversal with stack. Such format has been widely used.
 ### 237.Delete Node in a Linked List
 1. The idea of this "wield" solution is to make THIS node become its NEXT node. Normally, the annoying part of removing a node from a linked list is that the predecessor has to be found and the predecessor should point to another node. But in this solution, we can ignore the predecessor.
 ### 242.Valid Anagram 
@@ -53,3 +81,4 @@ description tells us : 1 or 2 steps a time.
 1. We cannot tell if a character is unique unless we have checked it against the whole string; and we also need to find the first unique one. So in the first round, we can record the occurence of every charactor; and in the second round, we find the first unique one.
 ### 461. Hamming Distance
 1. The exclusive-or of two numbers can indicate on which bits they differ. Then the number of 1 bits is the hamming distance of the two numbers (using question 191).
+
