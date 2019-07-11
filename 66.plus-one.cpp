@@ -46,7 +46,7 @@ public:
             result[i] = tmp % 10;
             carry = tmp / 10;
         }
-        if (result[0] == 0) {
+        if (carry) {
             result[0] = 1;
             result.push_back(0);
         }
