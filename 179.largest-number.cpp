@@ -37,8 +37,7 @@ public:
         if (all_of(nums.begin(), nums.end(), [](int a) { return a == 0; }))
             return "0";
         vector<string> arr;
-        for (int e : nums)
-            arr.push_back(to_string(e));
+        transform(nums.begin(), nums.end(), back_inserter(arr), [](int a) { return to_string(a); });
         sort(arr.begin(), arr.end(), [](string &a, string &b) { return a + b > b + a;} );
         return accumulate(arr.begin(), arr.end(), string(""));
     }
