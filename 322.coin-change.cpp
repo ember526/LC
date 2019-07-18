@@ -37,24 +37,25 @@
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
+        //missed the cornor case
         if (amount == 0)
             return 0;
         vector<int>solutions(amount + 1, 0);
         for (int e : coins)
+            //out of boundary error
             if (e <= amount)
                 solutions[e] = 1;
         for (int i = 1; i <= amount; ++i) {
+            //overwriten the basic cases
             if (solutions[i])
                 continue;
             int least = 0;
             for (int e : coins)
                 if (i - e >= 0 && solutions[i-e] > 0) 
                     least = least ? min(least, solutions[i-e] + 1) : solutions[i-e] + 1;
-            if (least)
+            
                 solutions[i] = least;
         }
-        //for (int e : solutions)
-        //    cout << e << " ";
         return solutions[amount] ? solutions[amount] : -1;
     }
 };
