@@ -119,6 +119,7 @@ public:
                     zero.push(ch);
             }
         }
+        //Circles result in nonzero values in the final indegree vector
         return result.length() == indegree.size() ? result : "";
     }
 };
