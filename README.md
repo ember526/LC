@@ -4,6 +4,8 @@ My leetcode sulotions
 1. The general idea is to expand the substring from one position to two sides.
 2. Also notice that, there are actually two kinds of palindrome : those with one centre and those with two centres. So before expanding the substring outwards, we deal with the central part first.
 ### 7.Reverse Integer
+### 11.Coontainer with Most Water
+1. We should acknowledge that the shorter line is the bottle neck for the container. As we move the two lines toward each other, we always move the shorter one since keeping it will yield no better condition. Feels like Greedy Algorithm.
 ### 13.Roman to Integer
 1. One rule to decide when a roman charactor should be added to or subtracted from the sum : when it denotes a smaller number than the next one, it should be subtracted; otherwise added.
 ### 15.3 Sum
@@ -11,8 +13,18 @@ My leetcode sulotions
 2. As we move two iterators inward, we can expect that we don't miss out any cases. It can be proven easily.
 3. An important issue is to make sure that the result does not contain any duplicates (the array may have identical elements). It is easy to ignore that the fixed number may find its duplicate.
 4. It seems that using sort() on empty vector leads to error.
+### 17. Letter Combinations of a phone Number
+1. Notice that we cannot directly traverse std::queue using begin();xs
 ### 20.Valid Parentheses
 1. Attemp to use top() or pop() on an empty stack would result in runtime error.
+### 22.Generate Parentheses
+1. Backtrack : i think the whole method is just like a state machine (or maybe it is). We initiate it, make rules for it to proceed and set the termination conditions.
+### 29.Divide Two Integers
+1. We use subtraction in the place of dividing.
+2. Only one overflow case : INT_MIN / MIN.
+3. Take care about conditions when divisor is bigger than divident.
+### 34.Find First and Last Position of Element in Sorted Array
+1. When using binary search, if use l = mid instead of l = mid + 1, there could be a dead loop. (try to think about [0,1])
 ### 36.Valid Sudoku
 1. The general idea is to keep three "check lists" : rows, columns and 3*3 boxes. Actually, this is how human beings would check if the sudoku is valid.
 2. The takeaway : ponder on how humans would do the job
@@ -20,6 +32,14 @@ My leetcode sulotions
 ### 46.Permutation
 1. The general idea is to estimate the way humans would produce all the permutations.
 2. Notice that we have to swap the current position with itself.
+### 50.Pow(x, n)
+1. The solution will become tricky if we try to do it in iterative way. The general idea is to add up to n in its binary.
+### 54.Spiral Matrix
+### 55.Jump Game
+1. Just keep going...Quite simple
+### 56.Merge Intervals
+1. Be careful when trying to add/erase vector elements while using size() member function and [].
+### 62.Unique Paths
 ### 70.Climbint Stairs
 0. Very basic dynamic programming problem, 
 1. First question to think about : is the question of a smaller scale and that of a bigger scale *essentially*the same. If they are, we would call the one of a smaller scale 'the subproblem'; then we have more questions to ask based on the principles of DP:
@@ -31,6 +51,8 @@ My leetcode sulotions
 1.Typical backtracking problem, refer to No.46 permutations.
 ### 88.Merge Sorted Array
 1. Fill the array from the back of nums1. Very interesting operations on the array.
+### 91.Decode Ways
+1. A mutant of the typical DP problem Climbing Stairs, the change is that when decoding, there are conditions when the steps should not be taken.
 ### 94.Binary Tree Inorder Traversal (iterative)
 1. Morris Traversal : a)Do as humans would do : always go to the most left leaf and push every node on the way into the todo stack. b)For every node that we visit, we clime on its right subtree and take the right node as the new root, then repeat the above actions.
 ### 103.Binary Tree Zigzag Level Order Traversal
@@ -39,6 +61,16 @@ My leetcode sulotions
 ### 125.Valid Palindrome
 1. Good helpers with strings : isalpha, isalnum and tolower.
 2. "Ignoring cases" means "a==A", rather than "there are no upper case letters".
+### 127.Word Ladder
+1. Use BFS to solve the problm, and all the words that only differ in one charactor are adjacent nodes in a graph.
+### 130.Surrounded Regions
+### 138.Copy List with Random Pointer
+1. Weave the new list upon the old one and them seperate them apart. 
+2. Deal with the random pointer before instead of at the same time with serating the lists.
+### 148.Sort List
+1. It is really easy to forget to set the end of every left-list to NULL.
+### 150.Evaluate Reverse Polish Notation
+1. Lambda expression XD
 ### 155.Min Stack
 1. Notice that this question requires a stack, which can give its min in O(1) time.
  It gets to do that by pushing its old MIN into stack (again) every time a same or smaller MIN comes in; and when MIN pops out, the next element on the stack is the second smallest which then serves as the new MIN. Notice that we would "update" MIN even the new comer is equal to the MIN; we do this because such new comers have the rightful claim to the MIN and this value would still be the MIN even if one of such values pops out.
@@ -47,12 +79,19 @@ My leetcode sulotions
 ### 172.Factorial Trailing Zeroes
 1. We have much more 2s than 5s, so we only need to count 5s.
 2. Notice that the calculation would take 25 twice.
+### 179.Notice the usages of several C++ functions : all_of(), transform(), sort(), accumulate() and the lambda.
 ### 191.Number of 1 Bits
 1. Given n, if we let n & n - 1, then we have exactly one less 1 bit in n. If we keep doing it until n is zero, we have the number of 1 bits.
 2. It is rather to prove that. Just use the basic conditions.
 ### 202.Happy Number
 1. Use slow and fast to detect circle.
 2. Notice that slow and fast may equal to 1 after iterations
+### 207.Course Schedule
+1. Construct the adjacent table and count the indegrees of all vertices based on all the givn edges.
+2. Scan the indegree array to find all vertices whose indegrees are 0, they are the basic courses.
+3. Enqueue these vertices.
+4. For every vertix in the Basic Course Queue, decrement their adjacent vertices' indegree by 1, which means one of its prerequisites has been fulfilled. Enqueue the vertice if its degree turns 0; whenever pop out one vertice from the queue, decrement the course number by one, which means one course can been scheduled.
+5. When the queue turns empty, if the course number is 0, then all the courses can get scheduled. 
 ### 215.Kth Largest Element in an Array
 TODO. Use heap to solve the problem
 1. Partitioning is the right tool to achieve this.
@@ -68,11 +107,19 @@ TODO. Use heap to solve the problem
 ### 268.Missing Number
 1. Very simple solution : if we know a series of consecutive integers starting from 0 and its length, then we know the sum of them; after taking one of them away, the sum changes and we know which one.
 2. We can use this solution because the condition given is very special : starting from 0, consequtive integers.
+### 279.Perfect Squares
+#### D.S.
+1. vector<int> squares: squares are the building blocks of the whole thing, since we are to solve the problem in a bottom-up way. 
+2. int cnt : the general idea is building up to n one layer a time (i.e. first one square, then two squares summing up and so on), the count records which level we are on.
+3. queue<int> layer, int size : a layer has all the integers that can be written as sums of "cnt" square numbers; since we will add new number to layer as we do the BFS, we should record the size.
+4. vector<int> record(n) : things may go astray if there is no facility to record what has been done since there tends to be more than one way to sum to a number with squares; we call this method "BFS" and this vector records which vertices have been visited.
 ### 334.Increasing Triplet Subsequence
 1. The question does not require that we should find all such subsequences. We only need to tell if such things do exist.
 2. We need to look at things from a different perspective. Ask the question : what is an increasing triplet subsequence?
 3. The interesting thing about this solution is that it amazingly integrate the If-Else Block with the inner nature of increasing subsequence.
 4. PS : what is the thing that we can only go forward and cannot go back? Is there any other answer but time? Well, I am trying to work out a metophor to this question.
+### 371.Sum of Two Integers
+1. The idea is to keep transforming the original problem until it becomes adding a number with 0 until it becomes adding a number with 0
 ### 384.Shuffle an Array
 1. As for the data members, we should always keep the original version as it is required by reset();
 2. To generate a random permutation of a array, we have Fisher-Yates algorithms here : swap every element with a random element before it (or with itself);
