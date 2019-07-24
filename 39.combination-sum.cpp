@@ -58,7 +58,7 @@ public:
         return result;
     }
 private:
-    void dfs(const vector<int> nums,
+    void dfs(const vector<int>& nums,
              int target,
              int start, int curSum, vector<int> &cur, vector<vector<int>>& result) {
         if (start == nums.size() || curSum > target)
