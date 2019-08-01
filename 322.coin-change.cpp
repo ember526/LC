@@ -37,7 +37,7 @@
 class Solution {
 public:
     int coinChange(vector<int>& coins, int amount) {
-        vector<int> dp(amount + 1, -5);
+        vector<int> dp(amount + 1, -1);
         dp[0] = 0;
         for (int i = 1; i <= amount; ++i) {
             for (int j = coins.size() - 1; j >= 0; --j) {
