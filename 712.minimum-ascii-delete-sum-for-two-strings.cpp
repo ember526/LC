@@ -53,8 +53,10 @@ public:
             for (int j = 1; j <= s2.length(); ++j) {
                 if (s1[i-1] == s2[j-1])
                     dp[i][j] = dp[i-1][j-1] + s1[i-1];
-                int neighbor = max(dp[i-1][j], dp[i][j-1]);
-                dp[i][j] = max(dp[i][j], neighbor);
+                else
+                    dp[i][j] = max(dp[i-1][j], dp[i][j-1]); 
+                //int neighbor = max(dp[i-1][j], dp[i][j-1]);
+                //dp[i][j] = max(dp[i][j], neighbor);
             }
         int sum1 = 0, sum2 = 0;
         for (char ch : s1)
