@@ -46,6 +46,6 @@ public:
                 dp[i] = dp[i] < 0 ? dp[i - coins[j]] + 1 : min(dp[i], dp[i - coins[j]] + 1);
             }
         }
-        return dp[amount] < 0 ? -1 : dp[amount];
+        return dp[amount] ;
     }
 };
