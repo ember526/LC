@@ -72,8 +72,6 @@ public:
             return 0;
 
         queue<string> q;
-        unordered_map<string, int> words;
-        words[beginWord] = -1;
         q.push(beginWord);
 
         int step = 0;
@@ -82,10 +80,7 @@ public:
             for (int size = q.size(); size > 0; --size) {
                 string w = q.front();
                 q.pop();
-                int loc = words[w];
                 for (int i = 0; i < beginWord.length(); ++i) {
-                    if (i == loc)
-                        continue;
                     char ch = w[i];
                     for (char j = 'a'; j < 'z'; ++j) {
                         w[i] = j;
@@ -93,7 +88,6 @@ public:
                             return step + 1;
                         if (dict.count(w) == 0)
                             continue;
-                        words[w] = i;
                         dict.erase(w);
                         q.push(w);
                     }
