@@ -96,12 +96,8 @@ private:
                 break;
             int num = stoi(sub);
             
-            if (start == 2)
-                cout << "hello 2 " << num << " " << result.size() << endl;
             if ((result.size() < 2) || ((long)num == (long)result.back() + result[result.size() - 2])){
                 result.push_back(num);
-                if (num == 123)
-                    cout << "hello 123 " << i << " " << result.size() << endl;
                 if (split(S, i + 1, result))
                     return true;
                 result.pop_back();
