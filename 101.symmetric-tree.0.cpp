@@ -54,9 +54,11 @@
 class Solution {
 public:
     bool isSymmetric(TreeNode* root) {
+        if (root == NULL)
+            return true;
         queue<TreeNode *> q;
-        q.push(root);
-        q.push(root);
+        q.push(root->left);
+        q.push(root->right);
         while (!q.empty()) {
             TreeNode *l = q.front();
             q.pop();
