@@ -64,8 +64,7 @@ public:
                 if (node->right)
                     next.push_back(node->right);
             }
-            result.push_back({});
-            result.back().swap(tmp);
+            result.push_back(tmp);
             layer.swap(next);
         }
         return result;
