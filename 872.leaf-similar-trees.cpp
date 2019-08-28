@@ -50,12 +50,6 @@ public:
         vector<int> leaf2;
         getLeaf(root1, leaf1);
         getLeaf(root2, leaf2);
-        for (int e : leaf1)
-            cout << e << " ";
-        cout << endl;
-        for (int e : leaf2)
-            cout << e << " ";
-        cout << endl;
         return leaf1 == leaf2;
     }
 private:
