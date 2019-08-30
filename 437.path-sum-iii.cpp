@@ -55,22 +55,27 @@ class Solution {
 public:
     int pathSum(TreeNode* root, int sum) {
         int result = 0;
-        vector<int> partsum;
-        dfs(root, sum, partsum, result);
+        vector<int> path;
+        dfs(root, sum, 0, path, result);
         return result;
     }
 public:
-    void dfs(TreeNode *root, int sum, vector<int> partsum, int &result) {
+    void dfs(TreeNode *root, int target, int cursum, vector<int> &path, int &result) {
         if (root == NULL)
             return;
-        partsum.push_back(0);
-        for (int &e : partsum) {
-            e += root->val;
-            if (e == sum)
+        cursum += root->val;
+        int partsum = cursum;
+        if (partsum == target)
+            ++result;
+        for (const int &e : path) {
+            partsum -= e;
+            if (partsum == target)
                 ++result;
         }
-        dfs(root->left, sum, partsum, result);
-        dfs(root->right, sum, partsum, result);
+        path.push_back(root->val);
+        dfs(root->left, target, cursum, path, result);
+        dfs(root->right, target, cursum, path, result);
+        path.pop_back();
         return;
     }
 };
