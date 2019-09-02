@@ -63,7 +63,6 @@ public:
             return {};
         unordered_map<int, int> m;
         stack<TreeNode *> s;
-        TreeNode *pred = NULL;
         auto cur = root;
         while (cur || !s.empty()) {
             while (cur) {
@@ -73,11 +72,8 @@ public:
             cur = s.top();
             s.pop();
             ++m[cur->val];
-            pred = cur;
             cur = cur->right;
         }
-        if (m.empty())
-            return {root->val};
         int modenum = 0;
         for (auto &p : m)
             if (p.second > modenum)
