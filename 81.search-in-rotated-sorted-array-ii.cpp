@@ -49,13 +49,10 @@ public:
              int mid = l + (r - l) / 2;
              if (nums[mid] == target)
                  return true;
-             while (l <= r && nums[l] == nums[mid] && nums[r] == nums[mid]) {
-                 ++l;
+             if (nums[r] == nums[mid]) {
                  --r;
              }
-             if (l > r)
-                 return false;
-             if (nums[mid] > target) {
+             else if (nums[mid] > target) {
                  if (nums[mid] > nums[r]) {
                      if (nums[r] >= target)
                          l = mid + 1;
