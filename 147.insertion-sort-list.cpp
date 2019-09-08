@@ -67,9 +67,6 @@ public:
         if (head == NULL)
             return NULL;
         ListNode dummy(INT_MIN);
-        dummy.next = head;
-        head = head->next;
-        dummy.next->next = NULL;
         while (head) {
             ListNode *cur = dummy.next, *prev = &dummy, *p = head;
             head = head->next;
