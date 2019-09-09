@@ -61,22 +61,13 @@ private:
             tmp->next = head;
             return tmp;
         }
-                int llength = length / 2, rlength = length - llength;
-        ListNode *iter = head, *rhead = NULL;
-        for (int i = 0; i < llength - 1; ++i)
-            iter = iter->next;
-        rhead = iter->next;
-        iter->next = NULL;
-        head = sort(head, llength),
-        rhead = sort(rhead, rlength);
-
-        return merge(head, rhead);
         int llen = length / 2, rlen = length - llen;
         ListNode *p = head;
         for (int i = 0; i < llen - 1; ++i)
             p = p->next;
-        auto right = p->next, left = sort(head, llen);
+        auto right = p->next ;
         p->next = NULL;
+        auto left = sort(head, llen);
         right = sort(right, rlen);
         return merge(left, right);
     }
