@@ -49,7 +49,7 @@
 class Trie {
 public:
     Trie() : root(new TrieNode()) {}
-    void Insert(string word) {
+    void Insert(const string &word) {
         auto p = root.get();
         for (char ch : word) {
             if (p->children[ch-'a'] == nullptr)
@@ -59,7 +59,7 @@ public:
         p->is_word = true;
     }
 
-    int FindRoot(string word) {
+    int FindRoot(string &word) {
         auto p = root.get();
         int len = 0;
         for (char ch : word) {
