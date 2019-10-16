@@ -6,9 +6,11 @@
  * https://leetcode.com/problems/word-ladder/description/
  *
  * algorithms
- * Medium (24.55%)
- * Total Accepted:    272.2K
- * Total Submissions: 1.1M
+ * Medium (25.57%)
+ * Likes:    1920
+ * Dislikes: 909
+ * Total Accepted:    309.9K
+ * Total Submissions: 1.2M
  * Testcase Example:  '"hit"\n"cog"\n["hot","dot","dog","lot","log","cog"]'
  *
  * Given two words (beginWord and endWord), and a dictionary's word list, find
@@ -64,38 +66,39 @@
  * 
  * 
  */
+
+// @lc code=start
 class Solution {
 public:
     int ladderLength(string beginWord, string endWord, vector<string>& wordList) {
         unordered_set<string> dict(wordList.begin(), wordList.end());
-        if (dict.count(endWord) == 0)
+        if (dict.find(endWord) == dict.end())
             return 0;
-
         queue<string> q;
         q.push(beginWord);
-
-        int step = 0;
-        while (q.empty() == false ) {
-            ++step;
-            for (int size = q.size(); size > 0; --size) {
-                string w = q.front();
+        int step = 1;
+        while (q.empty() == false) {
+            int size = q.size();
+            while (--size >= 0) {
+                string s =q.front();
                 q.pop();
-                for (int i = 0; i < beginWord.length(); ++i) {
-                    char ch = w[i];
-                    for (char j = 'a'; j < 'z'; ++j) {
-                        w[i] = j;
-                        if (w == endWord)
+                for (char &ch : s) {
+                    char tmp = ch;
+                    for (char i = 'a'; i <= 'z'; ++i) {
+                        ch = i;
+                        if (s == endWord)
                             return step + 1;
-                        if (dict.count(w) == 0)
+                        if (dict.find(s) == dict.end())
                             continue;
-                        dict.erase(w);
-                        q.push(w);
+                        dict.erase(s);
+                        q.push(s);
                     }
-                    w[i] = ch;
+                    ch = tmp;
                 }
             }
+            ++step;
         }
-
         return 0;
     }
 };
+// @lc code=end
