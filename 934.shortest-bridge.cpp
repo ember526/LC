@@ -6,9 +6,11 @@
  * https://leetcode.com/problems/shortest-bridge/description/
  *
  * algorithms
- * Medium (44.17%)
- * Total Accepted:    11.6K
- * Total Submissions: 26K
+ * Medium (44.78%)
+ * Likes:    385
+ * Dislikes: 29
+ * Total Accepted:    14.2K
+ * Total Submissions: 31.5K
  * Testcase Example:  '[[0,1],[1,0]]'
  *
  * In a given 2D binary array A, there are two islands.  (An island is a
@@ -61,66 +63,54 @@
  * 
  * 
  */
+
+// @lc code=start
 class Solution {
 public:
     int shortestBridge(vector<vector<int>>& A) {
-        auto print = [&]() {
-            for (auto &row : A) {
-                for (auto e : row)
-                    cout << e << " ";
-                cout << endl;
-            }
-            cout << "$" << endl;
-        };
-        //Get initial queue for BFS
-        queue<pair<int, int>> q;
-        //DFS to locate the first island
+        // First Find the island
         bool found = false;
+        queue<pair<int, int>> q;
         for (int i = 0; i < A.size() && !found; ++i)
             for (int j = 0; j < A[0].size() && !found; ++j)
-                if (A[i][j]) {
-                    dfs(A, i, j, q);
+                if (A[i][j] == 1) {
+                    Dfs(A, i, j, q);
                     found = true;
                 }
-        //BFS to esclate to the second island
-        int steps = 0;
-        vector<int> dirs{0, 1, 0, -1, 0};
+        // Expand the island
+        vector<pair<int, int>> dirs{{1, 0}, {-1, 0}, {0, -1}, {0, 1}};
+        int step = 0;
         while (q.empty() == false) {
-        //print();
+            ++step;
             int size = q.size();
             while (size--) {
-                int y = q.front().first,
-                    x = q.front().second;
+                int i = q.front().first, j = q.front().second;
                 q.pop();
-                for (int i = 0; i < 4; ++i) {
-                    int ny = y + dirs[i],
-                        nx = x + dirs[i+1];
-                    if (nx < 0 || ny < 0 || ny >= A.size() || nx >= A[0].size()
-                            || A[ny][nx] == 2)
+                for (const auto &dir : dirs) {
+                    int ni = i + dir.first, nj = j + dir.second;
+                    if (ni < 0 || nj < 0 || ni >= A.size() || nj >= A[0].size() ||
+                            A[ni][nj] == 2)
                         continue;
-                    if (A[ny][nx] == 1)
-                        return steps;
-                    A[ny][nx] = 2;
-                    q.emplace(ny, nx);
-
+                    if (A[ni][nj] == 1)
+                        return step - 1;
+                    A[ni][nj] = 2;
+                    q.emplace(ni, nj);
                 }
             }
-            ++steps;
         }
-
         return -1;
     }
 private:
-    void dfs(vector<vector<int>> &A, int y, int x, queue<pair<int, int>> &q) {
-        if (y < 0 || x < 0 || y >= A.size() || x >= A[0].size() || A[y][x] != 1)
+    void Dfs(vector<vector<int>> &A, int i, int j, queue<pair<int, int>> &q) {
+        if (i < 0 || j < 0 || i >= A.size() || j >= A[0].size() || A[i][j] != 1)
             return;
-        A[y][x] = 2;
-        q.emplace(y, x);
-        dfs(A, y + 1, x, q);
-        dfs(A, y - 1, x, q);
-        dfs(A, y, x - 1, q);
-        dfs(A, y, x + 1, q);
+        A[i][j] = 2;
+        q.emplace(i, j);
+        Dfs(A, i - 1, j, q);
+        Dfs(A, i + 1, j, q);
+        Dfs(A, i, j - 1, q);
+        Dfs(A, i, j + 1, q);
         return;
     }
-
 };
+// @lc code=end
