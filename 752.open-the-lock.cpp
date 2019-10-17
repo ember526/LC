@@ -6,9 +6,11 @@
  * https://leetcode.com/problems/open-the-lock/description/
  *
  * algorithms
- * Medium (46.49%)
- * Total Accepted:    25.6K
- * Total Submissions: 54.5K
+ * Medium (47.49%)
+ * Likes:    494
+ * Dislikes: 26
+ * Total Accepted:    29.6K
+ * Total Submissions: 62K
  * Testcase Example:  '["0201","0101","0102","1212","2002"]\n"0202"'
  *
  * 
@@ -78,49 +80,49 @@
  * 
  * 
  */
+
+// @lc code=start
 class Solution {
 public:
     int openLock(vector<string>& deadends, string target) {
-        const string init = "0000";
-        unordered_set<string> ends(deadends.begin(), deadends.end());        
-        unordered_set<string> visited;
-        visited.insert(init);
-        if (ends.find(init) != ends.end())
+        unordered_set<string> dict(deadends.begin(), deadends.end());
+        if (dict.find("0000") != dict.end())
             return -1;
+        unordered_set<string> visited;
         queue<string> q;
-        q.push(init);
+        q.push("0000");
+        visited.insert("0000");
         int step = 0;
         while (q.empty() == false) {
-            ++step;
             int size = q.size();
-            while (size--) {
-                string cur = q.front();
+            ++step;
+            while (--size >= 0) {
+                string s = q.front();
                 q.pop();
-                vector<string> neighbors;
-                findNeighbors(cur, neighbors);
-                for (auto &next : neighbors) {
-                    if (next == target)
+                vector<string> next;
+                getNext(s, next);
+                for (string &str : next) {
+                    if (str == target)
                         return step;
-                    if (visited.find(next) != visited.end())
+                    if (visited.count(str) || dict.count(str))
                         continue;
-                    if (ends.find(next) == visited.end()) {
-                        visited.insert(next);
-                        q.push(next);
-                    }
+                    visited.insert(str);
+                    q.push(str);
                 }
             }
         }
         return -1;
     }
 private:
-    void findNeighbors(string &cur, vector<string> &neighbors) {
-        for (int i = 0; i < 4; ++i) {
-            char digit = cur[i];
-            cur[i] = (digit - '0' + 1) % 10 + '0';
-            neighbors.push_back(cur);
-            cur[i] = (digit - '0' - 1 + 10) % 10 + '0';
-            neighbors.push_back(cur);
-            cur[i] = digit;
-         }
+    void getNext(string &s, vector<string> &next) {
+        for (char &ch : s) {
+            char tmp = ch;
+            ch = tmp == '9' ? '0' : tmp + 1;
+            next.push_back(s);
+            ch = tmp == '0' ? '9' : tmp - 1;
+            next.push_back(s);
+            ch = tmp;
+        }
     }
 };
+// @lc code=end
