@@ -6,9 +6,11 @@
  * https://leetcode.com/problems/01-matrix/description/
  *
  * algorithms
- * Medium (36.11%)
- * Total Accepted:    49.1K
- * Total Submissions: 134.9K
+ * Medium (36.89%)
+ * Likes:    870
+ * Dislikes: 87
+ * Total Accepted:    56.4K
+ * Total Submissions: 151.7K
  * Testcase Example:  '[[0,0,0],[0,1,0],[0,0,0]]'
  *
  * Given a matrix consists of 0 and 1, find the distance of the nearest 0 for
@@ -57,6 +59,8 @@
  * 
  * 
  */
+
+// @lc code=start
 class Solution {
 public:
     vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) {
@@ -64,30 +68,31 @@ public:
         for (int i = 0; i < matrix.size(); ++i)
             for (int j = 0; j < matrix[0].size(); ++j)
                 if (matrix[i][j] == 0)
-                    q.emplace(i, j);
-        int dis = 0;
-        vector<vector<int>> dirs{{0, 1}, {0, -1}, {1, 0}, {-1, 0}};
-        while (!q.empty()) {
-            ++dis;
+                    q.push({i, j});
+        vector<pair<int, int>> dirs {{1, 0}, {-1, 0}, {0, -1}, {0, 1}};
+        int step = 0;
+        while (q.empty() == false) {
             int size = q.size();
+            ++step;
             while (size--) {
-                int y = q.front().first,
-                    x = q.front().second;
+                int i = q.front().first,
+                    j = q.front().second;
                 q.pop();
-                for (auto &dir : dirs) {
-                    int i = y + dir[0],
-                        j = x + dir[1];
-                    if (i < 0 || j < 0 || i >= matrix.size() || j >= matrix[0].size() || matrix[i][j] != 1)
+                for (const auto &dir : dirs) {
+                    int ni = i + dir.first, nj = j + dir.second;
+                    if (ni < 0 || nj < 0 || ni >= matrix.size() || nj >= matrix[0].size() ||
+                            matrix[ni][nj] != 1)
                         continue;
-                    matrix[i][j] = dis == 1 ? -1 : dis;
-                    q.emplace(i, j);
+                    q.push({ni, nj});
+                    matrix[ni][nj] = step == 1 ? -1 : step;
                 }
             }
         }
-        for (auto &row : matrix)
-            for (auto &e : row)
-                if (e == -1)
-                    e = 1;
+        for (int i = 0; i < matrix.size(); ++i)
+            for (int j = 0; j < matrix[0].size(); ++j)
+                if (matrix[i][j] == -1)
+                    matrix[i][j] = 1;
         return matrix;
     }
 };
+// @lc code=end
