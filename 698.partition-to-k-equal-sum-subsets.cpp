@@ -6,9 +6,11 @@
  * https://leetcode.com/problems/partition-to-k-equal-sum-subsets/description/
  *
  * algorithms
- * Medium (42.67%)
- * Total Accepted:    48.3K
- * Total Submissions: 112.3K
+ * Medium (43.57%)
+ * Likes:    1074
+ * Dislikes: 61
+ * Total Accepted:    56.5K
+ * Total Submissions: 129K
  * Testcase Example:  '[4,3,2,3,5,2,1]\n4'
  *
  * Given an array of integers nums and a positive integer k, find whether it's
@@ -36,18 +38,20 @@
  * 
  * 
  */
+
+// @lc code=start
 class Solution {
 public:
     bool canPartitionKSubsets(vector<int>& nums, int k) {
         int sum = accumulate(nums.begin(), nums.end(), 0);
-        int subsum = sum / k;
-        if (subsum * k != sum)
+        if (sum % k)
             return false;
+        int target = sum / k;
         sort(nums.rbegin(), nums.rend());
-        return partition(nums, 0, 0, k, subsum);
+        return partition(nums, 0, 0, k, target);
     }
 private:
-    bool partition(const vector<int> &nums, int used, int cur, int k, int target) {
+    bool partition(vector<int> &nums, int used, int cur, int k, int target) {
         if (k == 1)
             return true;
         for (int i = 0; i < nums.size(); ++i) {
@@ -64,3 +68,4 @@ private:
         return false;
     }
 };
+// @lc code=end
