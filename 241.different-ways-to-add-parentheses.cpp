@@ -6,9 +6,11 @@
  * https://leetcode.com/problems/different-ways-to-add-parentheses/description/
  *
  * algorithms
- * Medium (50.46%)
- * Total Accepted:    78K
- * Total Submissions: 153.4K
+ * Medium (51.60%)
+ * Likes:    1160
+ * Dislikes: 60
+ * Total Accepted:    83.8K
+ * Total Submissions: 161.4K
  * Testcase Example:  '"2-1-1"'
  *
  * Given a string of numbers and operators, return all possible results from
@@ -37,43 +39,40 @@
  * (((2*3)-4)*5) = 10
  * 
  */
+
+// @lc code=start
 class Solution {
 public:
     vector<int> diffWaysToCompute(string input) {
+        ops['+'] = plus<int>();
+        ops['-'] = minus<int>();
+        ops['*'] = multiplies<int>();
+        ops['/'] = divides<int>();
         return partition(input);
     }
 private:
     unordered_map<string, vector<int>> m_;
-    const vector<int> &partition(const string &input) {
-        if (m_.count(input))
-            return m_[input];
+    unordered_map<char, function<int(int, int)>> ops;
+    const vector<int> &partition(const string &s) {
+        if (m_.find(s) != m_.end())
+            return m_[s];
         vector<int> result;
-        //Break the input at operators
-        for (int i = 0; i < input.length(); ++i) {
-            char ch = input[i];
-            if (isdigit(ch))
+        for (int i = 0; i < s.length(); ++i) {
+            if (isdigit(s[i]))
                 continue;
-            const string leftstr = input.substr(0, i), 
-                        rightstr = input.substr(i + 1);
-            const vector<int> &left = partition(leftstr);
-            const vector<int> &right = partition(rightstr);
-
-            function<int(int, int)> op;
-            if (ch == '+')
-                op = plus<int>();
-            else if (ch == '-')
-                op = minus<int>();
-            else if (ch == '*')
-                op = multiplies<int>();
-
-            for (int l : left)
-                for (int r : right)
-                    result.push_back(op(l, r));
+            string left = s.substr(0, i),
+                   right = s.substr(i + 1);
+            auto &lvals = partition(left);
+            auto &rvals = partition(right);
+            auto &op = ops[s[i]];
+            for (const int &a : lvals)
+                for (const int &b : rvals)
+                    result.push_back(op(a, b));
         }
-
         if (result.empty())
-            result.push_back(stoi(input));
-        m_[input].swap(result);
-        return m_[input];
+            result.push_back(stoi(s));
+        m_[s].swap(result);
+        return m_[s];
     }
 };
+// @lc code=end
