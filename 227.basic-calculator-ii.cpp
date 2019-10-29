@@ -68,7 +68,6 @@ public:
                 continue;
             }
             // all operations should break to clear value in num
-            cout << num << endl;
             if (ch == ' ')
                 continue;
             switch (prev) {
