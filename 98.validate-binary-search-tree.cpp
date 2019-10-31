@@ -6,9 +6,11 @@
  * https://leetcode.com/problems/validate-binary-search-tree/description/
  *
  * algorithms
- * Medium (25.75%)
- * Total Accepted:    421.1K
- * Total Submissions: 1.6M
+ * Medium (26.30%)
+ * Likes:    2552
+ * Dislikes: 373
+ * Total Accepted:    500.8K
+ * Total Submissions: 1.9M
  * Testcase Example:  '[2,1,3]'
  *
  * Given a binary tree, determine if it is a valid binary search tree (BST).
@@ -51,6 +53,8 @@
  * 
  * 
  */
+
+// @lc code=start
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -63,26 +67,22 @@
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
-        if (root == NULL)
-            return true;
-        int last = INT_MIN;
-        bool set = false;
-        stack<TreeNode *> s;
-        TreeNode *cur = root;
-        while (cur || !s.empty()) {
-            while (cur) {
-                s.push(cur);
-                cur = cur->left;
+        auto p = root;
+        stack<TreeNode *> st;
+        int *last = NULL;
+        while (st.empty() == false || p) {
+            while (p) {
+                st.push(p);
+                p = p->left;
             }
-            cur = s.top();
-            s.pop();
-            if (set == false)
-                set = true;
-            else if (cur->val <= last)
+            p = st.top();
+            st.pop();
+            if (last && p->val <= *last)
                 return false;
-            last = cur->val;
-            cur = cur->right;
+            last = &(p->val);
+            p = p->right;
         }
         return true;
     }
 };
+// @lc code=end
