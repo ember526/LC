@@ -60,19 +60,21 @@ class Solution {
 public:
     vector<vector<int>> intervalIntersection(vector<vector<int>>& A, vector<vector<int>>& B) {
         vector<vector<int>> result;
-        for (const auto &a : A)
-            for (const auto &b : B)
-                getIntsct(result, a, b);
+        for (int i = 0, j = 0; i < A.size() && j < B.size();) {
+            const auto &a = A[i], &b =B[j];
+            if (a[0] > b[1])
+                ++j;
+            else if (a[1] < b[0])
+                ++i;
+            else {
+                result.push_back({max(a[0], b[0]), min(a[1], b[1])});
+                if (a[1] > b[1])
+                    ++j;
+                else
+                    ++i;
+            }
+        }
         return result;
-    }
-
-private:
-    void getIntsct(vector<vector<int>> &result, const vector<int> &a, const vector<int> &b) {
-        if (a[0] > b[1] || a[1] < b[0])
-            return;
-        int lo = max(a[0], b[0]), hi = min(a[1], b[1]);
-        result.push_back({lo, hi});
-        return;
     }
 };
 // @lc code=end
