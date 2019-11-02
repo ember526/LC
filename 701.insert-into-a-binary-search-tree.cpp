@@ -6,9 +6,11 @@
  * https://leetcode.com/problems/insert-into-a-binary-search-tree/description/
  *
  * algorithms
- * Medium (76.65%)
- * Total Accepted:    57.1K
- * Total Submissions: 74.4K
+ * Medium (77.05%)
+ * Likes:    487
+ * Dislikes: 54
+ * Total Accepted:    67.5K
+ * Total Submissions: 87K
  * Testcase Example:  '[4,2,7,1,3]\n5'
  *
  * Given the root node of a binary search tree (BST) and a value to be inserted
@@ -54,6 +56,8 @@
  * 
  * 
  */
+
+// @lc code=start
 /**
  * Definition for a binary tree node.
  * struct TreeNode {
@@ -66,12 +70,28 @@
 class Solution {
 public:
     TreeNode* insertIntoBST(TreeNode* root, int val) {
-        if (root == NULL)
-            return new TreeNode(val);
-        if (root->val > val)
-            root->left = insertIntoBST(root->left, val);
-        else
-            root->right = insertIntoBST(root->right, val);
+        auto p = root;
+        while (p) {
+            if (val > p->val) {
+                if (p->right)
+                    p = p->right;
+                else {
+                    p->right = new TreeNode(val);
+                    break;
+                }
+            }
+            else if (val < p->val) {
+                if (p->left)
+                    p = p->left;
+                else {
+                    p->left = new TreeNode(val);
+                    break;
+                }
+            }
+            else
+                return root;
+        }
         return root;
     }
 };
+// @lc code=end
