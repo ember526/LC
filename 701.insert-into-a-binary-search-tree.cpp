@@ -91,7 +91,7 @@ public:
             else
                 return root;
         }
-        return root;
+        return root ? root : new TreeNode(val);
     }
 };
 // @lc code=end
