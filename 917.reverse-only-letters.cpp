@@ -74,8 +74,8 @@ public:
     string reverseOnlyLetters(string S) {
         int l = 0, r = S.length() - 1;
         while (l < r) {
-            while (l < r && !isalpha(S[l])) ++l; 
-            while (l < r && !isalpha(S[r])) --r; 
+            while (l < r && !isalpha(S[l])) ++l;
+            while (l < r && !isalpha(S[r])) --r;
             if (l < r)
                 swap(S[l++], S[r--]);
         }
