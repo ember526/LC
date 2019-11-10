@@ -52,42 +52,31 @@
 class Solution {
 public:
     int calculate(string s) {
+        istringstream ins(s);
+        char op = '+';
         stack<int> adders;
-        int num = 0;
-        char prev = '#';
-        auto updateTop = [&](function<int(int, int)> op) {
-            int top = adders.top();
+        int num;
+        auto relate = [&](int num, function<int(int,int)> op) {
+            int prev = adders.top();
             adders.pop();
-            top = op(top, num);
-            adders.push(top);
+            adders.push(op(prev, num));
+            return;
         };
-        s += '$';
-        for (const char &ch : s) {
-            if (isdigit(ch)) {
-                num = num * 10 + (ch - '0');
-                continue;
+        while (ins >> num) {
+            switch(op) {
+                case '+': adders.push(num); break;
+                case '-': adders.push(-num); break;
+                case '*': relate(num, multiplies<int>()); break;
+                case '/': relate(num, divides<int>()); break;
             }
-            // all operations should break to clear value in num
-            if (ch == ' ')
-                continue;
-            switch (prev) {
-                case '+' : adders.push(num); break;
-                case '-' : adders.push(-num); break;
-                case '*' : updateTop(std::multiplies<int>()); break;
-                case '/' : updateTop(std::divides<int>()); break;
-                case '#' : adders.push(num); break;
-                default: assert(0);
-            }
-            num = 0;
-            prev = ch;
+            ins >> op;
         }
 
         int result = 0;
-        while (adders.empty() == false) {
+        while (!adders.empty()) {
             result += adders.top();
             adders.pop();
         }
-
         return result;
     }
 };
