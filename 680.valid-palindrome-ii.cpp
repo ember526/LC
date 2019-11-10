@@ -48,18 +48,21 @@ public:
         int l = 0, r = s.length() - 1;
         while (l < r) {
             if (s[l] != s[r])
-                return secondChance(s, l, r - 1) || secondChance(s, l + 1, r);
+                return secondChance(s, l + 1, r) || secondChance(s, l, r - 1);
             ++l;
             --r;
         }
         return true;
     }
 private:
-    bool secondChance(const string &s, int l, int r) {
-        while (l < r)
+    bool secondChance(string &s, int l, int r) {
+        while (l < r) {
             if (s[l++] != s[r--])
                 return false;
+        }
         return true;
     }
 };
+
+
 // @lc code=end
