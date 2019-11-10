@@ -40,19 +40,22 @@ public:
     ListNode* reverseBetween(ListNode* head, int m, int n) {
         ListNode dummy(0);
         dummy.next = head;
-        head = &dummy;
-        for (int i = 0; i + 1 < m ; ++i)
-            head = head->next;
-        auto p = head->next, next = p->next;
-        for (int i = m; i < n; ++i) {
-            auto tmp = next;
-            next = next->next;
-            tmp->next = p;
-            p = tmp;
+        auto pre = &dummy;
+        auto cur = head;
+        for (int i = 1; i < m; ++i) {
+            pre = pre->next;
+            cur = cur->next;
         }
-        head->next->next = next;
-        head->next = p;
+        auto start = pre;
+        for (int i = m; i <= n; ++i) {
+            auto tmp = cur;
+            cur = cur->next;
+            tmp->next = pre;
+            pre = tmp;
+        }
+        start->next->next = cur;
+        start->next = pre;
         return dummy.next;
-    }        
+    }
 };
 // @lc code=end
