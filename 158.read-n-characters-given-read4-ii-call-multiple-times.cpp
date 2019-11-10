@@ -130,25 +130,24 @@ public:
      * @return    The number of actual characters read
      */
     int read(char *buf, int n) {
-        int sum = 0;
-        while (sum < n) {
+        int total = 0;
+        while (total < n) {
             if (pos == cap) {
-                cap = read4(mid);
-                pos = 0;
-                while (pos < cap && sum < n)
-                    buf[sum++] = mid[pos++];
-                if (cap < 4)
-                    return sum;
+                    cap = read4(local);
+                    for (pos = 0; pos < cap && total < n;)
+                        buf[total++] = local[pos++];
+                    if (cap < 4)
+                        break;
             }
             else {
-                while (pos < cap && sum < n)
-                    buf[sum++] = mid[pos++];
+                while (pos < cap && total < n)
+                    buf[total++] = local[pos++];
             }
         }
-        return n;
+        return total;
     }
 private:
-    char mid[4];
+    char local[4];
     int pos = 0;
     int cap = 0;
 };
