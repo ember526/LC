@@ -61,7 +61,7 @@ public:
     vector<vector<int>> intervalIntersection(vector<vector<int>>& A, vector<vector<int>>& B) {
         vector<vector<int>> result;
         for (int i = 0, j = 0; i < A.size() && j < B.size();) {
-            const auto &a = A[i], &b =B[j];
+            const auto &a = A[i], &b = B[j];
             if (a[0] > b[1])
                 ++j;
             else if (a[1] < b[0])
