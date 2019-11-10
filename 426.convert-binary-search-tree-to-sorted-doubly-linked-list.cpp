@@ -7,10 +7,10 @@
  *
  * algorithms
  * Medium (54.31%)
- * Likes:    573
- * Dislikes: 66
- * Total Accepted:    45.6K
- * Total Submissions: 82.8K
+ * Likes:    584
+ * Dislikes: 68
+ * Total Accepted:    47K
+ * Total Submissions: 85.1K
  * Testcase Example:  '{"$id":"1","val":4,"left":{"$id":"2","val":2,"left":{"$id":"4","val":1,"left":null,"right":null},"right":{"$id":"5","val":3,"left":null,"right":null}},"right":{"$id":"3","val":5,"left":null,"right":null}}'
  *
  * Convert a BST to a sorted circular doubly-linked list in-place. Think of the
@@ -72,32 +72,31 @@ public:
 class Solution {
 public:
     Node* treeToDoublyList(Node* root) {
-        if (root == NULL)
+        if (root == nullptr)
             return NULL;
-        stack<Node *>st;
-        Node *result = NULL;
-        Node *p = root, *prev = NULL;
-        while (p || !st.empty()) {
-            while (p) {
-                st.push(p);
-                p = p->left;
+        Node *cur = root, *prev = NULL, *head = NULL;
+        stack<Node *> st;
+        while (cur || !st.empty()) {
+            while (cur) {
+                st.push(cur);
+                cur = cur->left;
             }
-            p = st.top();
+            cur = st.top();
             st.pop();
-            if (prev == NULL) {
-                result = p;
-                prev = p;
+            if (prev) {
+                prev->right = cur;
+                cur->left = prev;
+                prev = cur;
             }
             else {
-                prev->right = p;
-                p->left = prev;
+                head = cur;
+                prev = cur;
             }
-            prev = p;
-            p = p->right;
+            cur = cur->right;
         }
-        prev->right = result;
-        result->left = prev;
-        return result;
+        prev->right = head;
+        head->left = prev;
+        return head;
     }
 };
 // @lc code=end
