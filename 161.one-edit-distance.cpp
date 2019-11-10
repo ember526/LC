@@ -54,25 +54,28 @@
 class Solution {
 public:
     bool isOneEditDistance(string s, string t) {
-        int dis = s.length() - t.length();
-        if (dis > 1 || dis < -1)
+        int diff = s.length() - t.length();
+        if (diff > 1 || diff < -1)
             return false;
-        for (int i = 0, j = 0; i < s.length() && j < t.length(); ++i, ++j)
-            if (s[i] != t[j])
-                return (dis == 1  && secondChance(s, i + 1, t, j))
-                    || (dis == -1 && secondChance(s, i, t, j + 1))
-                    || (dis == 0  &&secondChance(s, i + 1, t, j + 1));
-        if (dis == 1 || dis == -1)
+        for (int i = 0; i < s.length() && i < t.length(); ++i) {
+            if (s[i] != t[i]) {
+                if (diff == 1)  return secondChance(s, i + 1, t, i);
+                if (diff == 0)  return secondChance(s, i + 1, t, i + 1);
+                if (diff == -1) return secondChance(s, i, t, i + 1);
+            }
+        }
+        if (diff == 1 || diff == -1)
             return true;
         return false;
     }
+
 private:
     bool secondChance(const string &s, int i, const string &t, int j) {
-        while (i < s.length() && j < t.length())
+        while (i < s.length()) {
             if (s[i++] != t[j++])
                 return false;
+        }
         return true;
     }
-  
 };
 // @lc code=end
