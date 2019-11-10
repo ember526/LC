@@ -75,9 +75,10 @@ public:
         int result = 0;
         for (int age : ages)
             ++counts[age];
-        for (int a = 1; a < 121; ++a)
-            for (int b = 0.5 * a + 8; b <= a; ++b)
+        for (int a = 1; a < 121; ++a) {
+            for (int b = a * 0.5 + 8; b <= a; ++ b)
                 result += counts[a] * (counts[b] - (a == b));
+        }
         return result;
     }
 };
