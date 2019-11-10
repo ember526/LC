@@ -56,22 +56,18 @@
 class Solution {
 public:
     vector<string> topKFrequent(vector<string>& words, int k) {
-        // Count the words
-        unordered_map<string, int> counts;
-        for (const string &s : words)
-            ++counts[s];
-
-        // Build the max heap
-        auto cmp = [](const pair<string, int> &a, const pair<string, int> &b) {
+        unordered_map<string, int> dict;
+        for (auto &s : words)
+            ++dict[s];
+        typedef pair<string, int> Record;
+        auto cmp = [](const Record &a, const Record &b) {
             return a.second < b.second || (a.second == b.second && a.first > b.first);
         };
-        priority_queue<pair<string, int>, vector<pair<string, int>>, decltype(cmp)> heap(counts.begin(), counts.end(), cmp);
-        
-        // Pop k elements out
+        priority_queue<Record, vector<Record>, decltype(cmp)> pq(dict.begin(), dict.end(), cmp);
         vector<string> result;
-        for (int i = 0; i < k; ++i) {
-            result.push_back(heap.top().first);
-            heap.pop();
+        while (k--) {
+            result.push_back(pq.top().first);
+            pq.pop();
         }
         return result;
     }
