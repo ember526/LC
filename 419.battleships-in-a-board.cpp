@@ -49,17 +49,18 @@
 class Solution {
 public:
     int countBattleships(vector<vector<char>>& board) {
-        int sum = 0;
+        int count = 0;
         for (int i = 0; i < board.size(); ++i)
-            for (int j = 0; j < board[0].size(); ++j)
+            for (int j = 0; j < board[0].size(); ++j) {
                 if (board[i][j] == 'X') {
-                    for (int y = i; y < board.size() && board[y][j] == 'X'; ++y)
-                            board[y][j] = '$';
-                    for (int x = j + 1; x < board[0].size() && board[i][x] == 'X'; ++x)
-                            board[i][x] = '$';
-                    ++sum;
+                    ++count;
+                    for (int right = j + 1; right < board[0].size() && board[i][right] == 'X'; ++right)
+                        board[i][right] = 'Y';
+                    for (int down = i + 1; down < board.size() && board[down][j] == 'X'; ++down)
+                        board[down][j] = 'Y';
                 }
-        return sum;
+            }
+        return count;
     }
 };
 // @lc code=end
