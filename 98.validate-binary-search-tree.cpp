@@ -67,19 +67,21 @@
 class Solution {
 public:
     bool isValidBST(TreeNode* root) {
-        auto p = root;
+        if (root == nullptr)
+            return true;
+        TreeNode *p = root, *prev = nullptr;
         stack<TreeNode *> st;
-        int *last = NULL;
-        while (st.empty() == false || p) {
+        while (p || !st.empty()) {
             while (p) {
                 st.push(p);
                 p = p->left;
             }
             p = st.top();
             st.pop();
-            if (last && p->val <= *last)
+            cout << p->val;
+            if (prev && prev->val >= p->val)
                 return false;
-            last = &(p->val);
+            prev = p;
             p = p->right;
         }
         return true;
