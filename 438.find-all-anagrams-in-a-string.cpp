@@ -56,22 +56,23 @@
 class Solution {
 public:
     vector<int> findAnagrams(string s, string p) {
-        vector<int> result;
-        vector<int> sstats(26, 0), pstats(26, 0);
         if (s.length() < p.length())
-            return result;
+            return {};
+        vector<int> sChars(26, 0);
+        vector<int> pChars(26, 0);
         for (int i = 0; i < p.length(); ++i) {
-            ++sstats[s[i]-'a'];
-            ++pstats[p[i]-'a'];
+            ++sChars[s[i]-'a'];
+            ++pChars[p[i]-'a'];
         }
-        if (sstats == pstats)
+        vector<int> result;
+        if (sChars == pChars)
             result.push_back(0);
-        for (int i = p.length(); i < s.length(); ++i) {
-            ++sstats[s[i]-'a'];
-            --sstats[s[i-p.length()]-'a'];
-            if (sstats == pstats)
-                result.push_back(i - p.length() + 1);
-        }       
+        for (int i = 1; i + p.length() - 1 < s.length(); ++i) {
+            --sChars[s[i-1]-'a'];
+            ++sChars[s[i+p.length()-1]-'a'];
+            if (sChars == pChars)
+                result.push_back(i);
+        }
         return result;
     }
 };
