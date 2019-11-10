@@ -52,13 +52,12 @@
 class Solution {
 public:
     string customSortString(string S, string T) {
-        vector<int> rules(26, 26);
+        unordered_map<char, int> dict;
         for (int i = 0; i < S.length(); ++i)
-            rules[S[i]-'a'] = i;
-        auto cmp = [&](const char &a, const char &b) -> bool {
-            return rules[a-'a'] < rules[b-'a'];
+            dict[S[i]] = i;
+        auto cmp = [&](char &a, char &b) {
+            return dict[a] < dict[b];
         };
-
         sort(T.begin(), T.end(), cmp);
         return T;
     }
