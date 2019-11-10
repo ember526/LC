@@ -72,22 +72,23 @@
 class Solution {
 public:
     string toGoatLatin(string S) {
-        unordered_set<char> vowels({'a', 'e', 'i', 'o', 'u', 'A'});
+        unordered_set<char> vowel{'a', 'e', 'i', 'o', 'u'};
         istringstream iss(S);
-        string result = "", word = "";
-        int idx = 0;
+        string result, word;
+        int i = 1;
         while (iss >> word) {
-            ++idx;
-            if (vowels.count(tolower(word[0])) == 0) {
-                word += word[0];
+            char first = word[0];
+            if (!vowel.count(tolower(first))) {
                 word.erase(begin(word));
+                word += first;
             }
-            result += word + "ma";
-            result.append(idx, 'a');
-            result += " ";
+            word += "ma";
+            word.append(i, 'a');
+            result += word;
+            if (iss.peek() == ' ')
+                result += " ";
+            ++i;
         }
-        if (result.back() == ' ')
-            result.pop_back();
         return result;
     }
 };
